@@ -76,6 +76,11 @@ namespace OktaAspNetExample
 
                         n.AuthenticationTicket.Identity.AddClaims(claims);
 
+                        foreach (var group in userInfoResponse.Claims.Where(x => x.Type == "groups"))
+                        {
+                            n.AuthenticationTicket.Identity.AddClaim(new Claim(ClaimTypes.Role, group.Value));
+                        }
+
                         return;
                     },
 
